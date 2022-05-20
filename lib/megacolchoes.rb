@@ -9,14 +9,14 @@ module Megacolchoes
       message = lead.message
       source_name = lead.source ? lead.source.name : ''
 
-      if message.include?('emilamerengo')
+      if message.include?('emila') || message.include?('emilia')
         "#{source_name} - Anália Franco"
       elsif message.include?('nhambiquaras')
         "#{source_name} - Moema"
       elsif message.include?('rudge')
         "#{source_name} - Mogi das Cruzes"
       else
-        lead.source.name
+        source_name
       end
     end
   end
