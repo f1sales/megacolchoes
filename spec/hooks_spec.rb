@@ -26,7 +26,9 @@ RSpec.describe F1SalesCustom::Hooks::Lead do
   end
 
   context 'when message contains "rua_emilia_marengo,_327" - Facebook promotion' do
-    before { lead.message = 'por_qual_loja_você_prefere_ser_atendido?_: loja_anália_franco:_rua_emilia_marengo,_327_-_jardim_anália_franco_-_são_paulo_-_sp' }
+    before do
+      lead.message = 'por_qual_loja_você_prefere_ser_atendido?_: loja_anália_franco:_rua_emilia_marengo,_327_-_jardim_anália_franco_-_são_paulo_-_sp'
+    end
 
     it 'returns source name' do
       expect(described_class.switch_source(lead)).to eq('Facebook - Simmons - mega - Anália Franco')
