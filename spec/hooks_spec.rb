@@ -2,7 +2,7 @@ require 'ostruct'
 require 'byebug'
 
 RSpec.describe F1SalesCustom::Hooks::Lead do
-  let(:source_name) { 'Facebook - Simmons - mega' }
+  let(:source_name) { 'Diferent Source' }
   let(:source) do
     source = OpenStruct.new
     source.name = source_name
@@ -17,45 +17,33 @@ RSpec.describe F1SalesCustom::Hooks::Lead do
     lead
   end
 
-  context 'when message contains "mega-emilamerengo 327"' do
-    before { lead.message = 'conditional_question_3: mega-emilamerengo 327' }
+  let(:switch_source) { described_class.switch_source(lead) }
 
-    it 'returns source name' do
-      expect(described_class.switch_source(lead)).to eq('Facebook - Simmons - mega - Anália Franco')
-    end
+  it 'when is from a Diferent source' do
+    expect(switch_source).to eq('Diferent Source')
   end
 
-  context 'when message contains "rua_emilia_marengo,_327" - Facebook promotion' do
-    before do
-      lead.message = 'por_qual_loja_você_prefere_ser_atendido?_: loja_anália_franco:_rua_emilia_marengo,_327_-_jardim_anália_franco_-_são_paulo_-_sp'
+  context 'when lead come from Simmons' do
+    context 'when lead come with Facebook source' do
+      before do
+        lead.message = 'conditional_question_3: Analia Franco Tatuape - Rua Itapura, 1352 - Simmons Store'
+        source.name = 'Simmons - Facebook'
+      end
+
+      it 'returns source name' do
+        expect(switch_source).to eq('Simmons - Facebook - Simmons Store')
+      end
     end
 
-    it 'returns source name' do
-      expect(described_class.switch_source(lead)).to eq('Facebook - Simmons - mega - Anália Franco')
-    end
-  end
+    context 'when lead come with Widgrid Simmons source' do
+      before do
+        lead.message = 'Simmons - ESC - Analia Franco Tatuape - Rua Itapura, 1352 - Simmons Store'
+        source.name = 'Simmons - Widgrid'
+      end
 
-  context 'when message contains "mega-nhambiquaras 801"' do
-    before { lead.message = 'conditional_question_3: mega-nhambiquaras 801' }
-
-    it 'returns source name' do
-      expect(described_class.switch_source(lead)).to eq('Facebook - Simmons - mega - Moema')
-    end
-  end
-
-  context 'when message contains "capitao manoel rudge 823"' do
-    before { lead.message = 'conditional_question_3: mega-capitao manoel rudge 823' }
-
-    it 'returns source name' do
-      expect(described_class.switch_source(lead)).to eq('Facebook - Simmons - mega - Mogi das Cruzes')
-    end
-  end
-
-  context 'when message does not have a specific address' do
-    before { lead.message = 'conditional_question_3:' }
-
-    it 'returns source name' do
-      expect(described_class.switch_source(lead)).to eq('Facebook - Simmons - mega')
+      it 'returns source name' do
+        expect(switch_source).to eq('Simmons - Widgrid - Simmons Store')
+      end
     end
   end
 end
