@@ -10,9 +10,9 @@ module Megacolchoes
         @lead = lead
 
         return "#{source_name} - Simmons Store" if message['simmons store']
-        return "#{source_name} - Mogi" if product_name['mogi']
-        return "#{source_name} - Analia Franco" if message['analia franco']
-        return "#{source_name} - Moema" if message['moema']
+        return "#{source_name} - Mogi" if message['mogi'] || product_name['mogi']
+        return "#{source_name} - Analia Franco" if message['analia franco'] || product_name['analia franco']
+        return "#{source_name} - Moema" if message['moema'] || product_name['moema']
         return "#{source_name} - Santo André" if message['avenida portugal']
 
         source_name
