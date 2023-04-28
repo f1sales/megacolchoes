@@ -60,33 +60,63 @@ RSpec.describe F1SalesCustom::Hooks::Lead do
     before { source.name = source_name }
 
     context 'when is to Mogi' do
-      before { product.name = 'Loja Mega Mogi - Charlotte' }
+      context 'when information come in message' do
+        before { lead.message = 'Loja Mega Mogi - Charlotte' }
 
-      it 'returns Facebook - Mega Colchões' do
-        expect(switch_source).to eq("#{source_name} - Mogi")
+        it 'returns Facebook - Mega Colchões' do
+          expect(switch_source).to eq("#{source_name} - Mogi")
+        end
+      end
+
+      context 'when information come in product' do
+        before { product.name = 'Loja Mega Mogi - Charlotte' }
+
+        it 'returns Facebook - Mega Colchões' do
+          expect(switch_source).to eq("#{source_name} - Mogi")
+        end
       end
     end
 
     context 'when is to Analia Franco' do
-      before { lead.message = 'conditional_question_3: Analia Franco - Rua Emília Marengo, 327 - Mega' }
+      context 'when information come in message' do
+        before { lead.message = 'conditional_question_3: Analia Franco - Rua Emília Marengo, 327 - Mega' }
 
-      it 'returns Facebook - Mega Colchões - Analia Franco' do
-        expect(switch_source).to eq("#{source_name} - Analia Franco")
+        it 'returns Facebook - Mega Colchões - Analia Franco' do
+          expect(switch_source).to eq("#{source_name} - Analia Franco")
+        end
+      end
+
+      context 'when information come in product' do
+        before { product.name = 'Analia Franco' }
+
+        it 'returns Facebook - Mega Colchões - Analia Franco' do
+          expect(switch_source).to eq("#{source_name} - Analia Franco")
+        end
       end
     end
 
     context 'when is to Moema' do
-      before { lead.message = 'conditional_question_3: Moema - Alameda dos Nhambiquaras, 832 - Mega' }
+      context 'when lead come in message' do
+        before { lead.message = 'conditional_question_3: Moema - Alameda dos Nhambiquaras, 832 - Mega' }
 
-      it 'returns Facebook - Mega Colchões - Analia Franco' do
-        expect(switch_source).to eq("#{source_name} - Moema")
+        it 'returns Facebook - Mega Colchões - Analia Franco' do
+          expect(switch_source).to eq("#{source_name} - Moema")
+        end
+      end
+
+      context 'when lead come in product' do
+        before { product.name = 'Loja Mega moema - Titanium 50%off' }
+
+        it 'returns Facebook - Mega Colchões - Analia Franco' do
+          expect(switch_source).to eq("#{source_name} - Moema")
+        end
       end
     end
 
-    context 'when is to Moema' do
+    context 'when is to Santo André' do
       before { lead.message = 'conditional_question_3: Centro - Avenida Portugal, 1477 - Mega' }
 
-      it 'returns Facebook - Mega Colchões - Analia Franco' do
+      it 'returns Facebook - Mega Colchões - Santo André' do
         expect(switch_source).to eq("#{source_name} - Santo André")
       end
     end
