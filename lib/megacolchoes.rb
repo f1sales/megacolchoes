@@ -11,9 +11,9 @@ module Megacolchoes
 
         return "#{source_name} - Simmons Store" if message['simmons store']
         return "#{source_name} - Mogi" if message['mogi'] || product_name['mogi']
-        return "#{source_name} - Analia Franco" if message['analia franco'] || product_name['analia franco']
+        return "#{source_name} - Analia Franco" if message['analia franco'] || product_name['lia franco']
         return "#{source_name} - Moema" if message['moema'] || product_name['moema']
-        return "#{source_name} - Santo André" if message['avenida portugal']
+        return "#{source_name} - Santo André" if message['avenida portugal'] || product_name['santo andr']
 
         source_name
       end

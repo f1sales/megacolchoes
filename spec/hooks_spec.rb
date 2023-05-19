@@ -87,10 +87,20 @@ RSpec.describe F1SalesCustom::Hooks::Lead do
       end
 
       context 'when information come in product' do
-        before { product.name = 'Analia Franco' }
+        context 'when Analia Franco come without accent' do
+          before { product.name = 'Analia Franco' }
 
-        it 'returns Facebook - Mega Colchões - Analia Franco' do
-          expect(switch_source).to eq("#{source_name} - Analia Franco")
+          it 'returns Facebook - Mega Colchões - Analia Franco' do
+            expect(switch_source).to eq("#{source_name} - Analia Franco")
+          end
+        end
+
+        context 'when Anália Franco come with accent' do
+          before { product.name = 'Loja Anália Franco - Titanium 50%off - Mega' }
+
+          it 'returns Facebook - Mega Colchões - Analia Franco' do
+            expect(switch_source).to eq("#{source_name} - Analia Franco")
+          end
         end
       end
     end
@@ -114,10 +124,20 @@ RSpec.describe F1SalesCustom::Hooks::Lead do
     end
 
     context 'when is to Santo André' do
-      before { lead.message = 'conditional_question_3: Centro - Avenida Portugal, 1477 - Mega' }
+      context 'when lead come in message' do
+        before { lead.message = 'conditional_question_3: Centro - Avenida Portugal, 1477 - Mega' }
 
-      it 'returns Facebook - Mega Colchões - Santo André' do
-        expect(switch_source).to eq("#{source_name} - Santo André")
+        it 'returns Facebook - Mega Colchões - Santo André' do
+          expect(switch_source).to eq("#{source_name} - Santo André")
+        end
+      end
+
+      context 'when lead come in product' do
+        before { product.name = 'Loja Santo André - Titanium 50%off - Mega' }
+
+        it 'returns Facebook - Mega Colchões - Santo André' do
+          expect(switch_source).to eq("#{source_name} - Santo André")
+        end
       end
     end
   end
