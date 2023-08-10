@@ -57,7 +57,17 @@ RSpec.describe F1SalesCustom::Hooks::Lead do
 
   context 'when source is Facebook - Mega Colchões' do
     let(:source_name) { 'Facebook - Mega Colchões' }
-    before { source.name = source_name }
+    before { source.name = 'Facebook - Mega Colchões' }
+
+    context 'when is from Simmons Store' do
+      context 'when information come in product' do
+        before { product.name = 'Loja SImmons Store - Charlotte + box - 12x389' }
+
+        it 'returns Facebook - Mega Colchões' do
+          expect(switch_source).to eq("#{source_name} - Simmons Store")
+        end
+      end
+    end
 
     context 'when is to Mogi' do
       context 'when information come in message' do

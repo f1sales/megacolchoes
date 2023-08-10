@@ -9,11 +9,11 @@ module Megacolchoes
       def switch_source(lead)
         @lead = lead
 
-        return "#{source_name} - Simmons Store" if message['simmons store']
-        return "#{source_name} - Mogi" if message['mogi'] || product_name['mogi']
-        return "#{source_name} - Analia Franco" if message['analia franco'] || product_name['lia franco']
-        return "#{source_name} - Moema" if message['moema'] || product_name['moema']
-        return "#{source_name} - Santo André" if message['avenida portugal'] || product_name['santo andr']
+        return "#{source_name} - Simmons Store" if simmons_store?
+        return "#{source_name} - Mogi" if mogi?
+        return "#{source_name} - Analia Franco" if analia_franco?
+        return "#{source_name} - Moema" if moema?
+        return "#{source_name} - Santo André" if santo_andre?
 
         source_name
       end
@@ -28,6 +28,26 @@ module Megacolchoes
 
       def source_name
         @lead.source&.name || ''
+      end
+
+      def simmons_store?
+        message['simmons store'] || product_name['simmons store']
+      end
+
+      def mogi?
+        message['mogi'] || product_name['mogi']
+      end
+
+      def analia_franco?
+        message['lia franco'] || product_name['lia franco']
+      end
+
+      def moema?
+        message['moema'] || product_name['moema']
+      end
+
+      def santo_andre?
+        message['avenida portugal'] || product_name['santo andr']
       end
     end
   end
